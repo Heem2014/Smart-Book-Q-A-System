@@ -13,14 +13,18 @@ Run this ONCE before asking questions:
 
 import os
 import streamlit as st
-from dotenv import load_dotenv
+
+# Load dotenv only if available (not needed on Streamlit Cloud)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
-
-# Load the API key from the .env file
-load_dotenv()
 
 
 def build_vector_store(docs_folder="docs"):

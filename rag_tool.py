@@ -15,10 +15,13 @@ import os
 from crewai.tools import tool
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
-from dotenv import load_dotenv
 
-# Load the API key
-load_dotenv()
+# Load dotenv only if available (not needed on Streamlit Cloud)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 
 @tool

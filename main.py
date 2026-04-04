@@ -53,15 +53,20 @@ def setup_api_keys():
 # Initialize API keys before any CrewAI imports
 api_keys_ready = setup_api_keys()
 
-from dotenv import load_dotenv
+# Load dotenv only if available (not needed on Streamlit Cloud)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    # python-dotenv not installed (e.g., on Streamlit Cloud)
+    # This is fine - we're using st.secrets instead
+    pass
+
 from crewai import Agent, Task, Crew, Process
 from rag_tool import rag_search_tool
 from rag_setup import build_vector_store_with_progress
 import tempfile
 import shutil
-
-# Load additional environment variables
-load_dotenv()
 
 
 # ============================================================
