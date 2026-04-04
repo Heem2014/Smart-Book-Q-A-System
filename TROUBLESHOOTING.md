@@ -6,28 +6,36 @@
 
 **Error**: `ModuleNotFoundError: This app has encountered an error... from dotenv import load_dotenv`
 
+**Root Cause**: Streamlit Cloud may have issues installing or importing python-dotenv, which is only needed for local development.
+
 **Solutions**:
 
-1. **Check requirements.txt format**
+1. **✅ FIXED: Made dotenv import optional**
+   - The app now gracefully handles missing python-dotenv
+   - Uses try/except to import dotenv only if available
+   - On Streamlit Cloud, it skips dotenv and uses st.secrets instead
+   - This fix has been applied to main.py, rag_setup.py, and rag_tool.py
+
+2. **Check requirements.txt format** (if you still see errors with other packages)
    - ✅ Use simple format (one package per line)
    - ❌ Avoid inline comments after package names
    - Example of correct format:
      ```
      streamlit
-     python-dotenv
      crewai
+     langchain
      ```
 
-2. **Verify packages.txt exists**
+3. **Verify packages.txt exists**
    - Must contain: `build-essential`
    - Required for compiling CrewAI dependencies
 
-3. **Clear cache and redeploy**
+4. **Clear cache and redeploy**
    - Go to Streamlit Cloud dashboard
    - Click "Manage app" → "Advanced settings"
    - Click "Clear cache and redeploy"
 
-4. **Check build logs**
+5. **Check build logs**
    - Click "Manage app" in lower right
    - Review the build logs for installation errors
    - Look for any packages that failed to install
