@@ -1,7 +1,5 @@
-# Smart Book Q&A Crew - Dependencies
+# Smart Book Q&A System - Python 3.14 Compatible
 streamlit==1.40.0
-crewai==0.70.0
-crewai-tools==0.12.0
 langchain==0.3.7
 langchain-text-splitters==0.3.2
 langchain-chroma==0.1.4
@@ -13,3 +11,4 @@ chromadb==0.5.20
 pypdf==5.1.0
 python-dotenv==1.0.1
 pydantic==2.9.2
+groq==0.13.0
