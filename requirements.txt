@@ -1,13 +1,15 @@
 # Smart Book Q&A Crew - Dependencies
-python-dotenv
-crewai
-langchain
-langchain-text-splitters
-langchain-chroma
-langchain-google-genai
-langchain-huggingface
-langchain-groq
-langchain-community
-chromadb
-pypdf
-streamlit
+streamlit==1.40.0
+crewai==0.80.0
+crewai-tools==0.14.0
+langchain==0.3.7
+langchain-text-splitters==0.3.2
+langchain-chroma==0.1.4
+langchain-google-genai==2.0.4
+langchain-huggingface==0.1.2
+langchain-groq==0.2.1
+langchain-community==0.3.7
+chromadb==0.5.20
+pypdf==5.1.0
+python-dotenv==1.0.1
+pydantic==2.9.2
