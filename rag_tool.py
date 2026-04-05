@@ -13,7 +13,6 @@ How it works:
 
 import os
 import streamlit as st
-from crewai.tools import tool
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 
@@ -38,7 +37,6 @@ def get_vector_store():
         embedding_function=embeddings
     )
 
-@tool
 def rag_search_tool(query: str) -> str:
     """
     Search the document knowledge base for information related to the query.

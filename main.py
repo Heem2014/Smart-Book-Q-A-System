@@ -133,7 +133,7 @@ def answer_question(question: str) -> str:
     """Answer a question using RAG with LangChain."""
     try:
         # Get relevant context from RAG tool
-        context = rag_search_tool.func(question)
+        context = rag_search_tool(question)
         
         # Create prompt
         prompt = f"""Based on the following information from the documents, please answer the question.
