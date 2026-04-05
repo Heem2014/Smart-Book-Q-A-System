@@ -133,9 +133,13 @@ def build_vector_store_with_progress(docs_folder="docs", progress_callback=None)
         if progress_callback:
             progress_callback(70, "Creating embeddings...")
             
-        embeddings = HuggingFaceEmbeddings(
-            model_name="sentence-transformers/all-MiniLM-L6-v2"
-        )
+        @st.cache_resource
+        def get_embeddings():
+            return HuggingFaceEmbeddings(
+                model_name="sentence-transformers/all-MiniLM-L6-v2"
+            )
+            
+        embeddings = get_embeddings()
 
         if progress_callback:
             progress_callback(90, "Building vector store...")

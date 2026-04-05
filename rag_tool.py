@@ -12,6 +12,7 @@ How it works:
 """
 
 import os
+import streamlit as st
 from crewai.tools import tool
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
@@ -23,6 +24,19 @@ try:
 except ImportError:
     pass
 
+@st.cache_resource
+def get_vector_store():
+    """Cache the vector store connection to avoid reloading on every query."""
+    if not os.path.exists("chroma_db"):
+        return None
+        
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    )
+    return Chroma(
+        persist_directory="chroma_db",
+        embedding_function=embeddings
+    )
 
 @tool
 def rag_search_tool(query: str) -> str:
@@ -30,20 +44,10 @@ def rag_search_tool(query: str) -> str:
     Search the document knowledge base for information related to the query.
     Returns the top 3 most relevant text chunks from the uploaded documents.
     """
-
-    # Check if the vector store exists
-    if not os.path.exists("chroma_db"):
+    vector_store = get_vector_store()
+    
+    if not vector_store:
         return "Error: No vector store found. Please run 'python rag_setup.py' first."
-
-    # Connect to the existing ChromaDB vector store
-    # Use the same embedding model as rag_setup.py
-    embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
-    )
-    vector_store = Chroma(
-        persist_directory="chroma_db",
-        embedding_function=embeddings
-    )
 
     # Search for the 3 most relevant chunks (semantic search)
     results = vector_store.similarity_search(query, k=3)

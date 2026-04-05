@@ -119,8 +119,9 @@ def build_vector_store_ui():
         st.warning("⚠️ Please upload documents and build the vector store first.")
 
 
+@st.cache_resource
 def get_llm():
-    """Get the Groq LLM."""
+    """Get the Groq LLM (cached to avoid reloading)."""
     return ChatGroq(
         model_name="llama-3.3-70b-versatile",
         temperature=0.7,
